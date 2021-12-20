@@ -1,3 +1,5 @@
+use std::ops::Deref;
+
 /// [UnsafeStorage] is used to mark that there are some arbitrary invariants
 /// which must be maintained in storing its inner value. Therefore, creation and
 /// modifying of the inner value is an "unsafe" behavior. Although it might not
@@ -32,5 +34,13 @@ impl<T: Copy> UnsafeStorage<T> {
     /// Get the inner value
     pub fn inner(&self) -> T {
         self.0
+    }
+}
+
+impl <T> Deref for UnsafeStorage<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
